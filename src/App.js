@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState, useEffect} from 'react'
+import {Route, Switch} from "react-router-dom";
+import axios from 'axios';
 
-function App() {
+import Header from "./components/layout/Header";
+import Footer from "./components/layout/Footer";
+import Home from "./components/pages/Home";
+import Product from './components/pages/Product';
+import Contact from "./components/pages/Contact";
+import Cart from "./components/pages/Cart";
+
+const App = () => {
+  const [foods, setFoods] = useState([]);
+
+  useEffect(() => {
+    axios.get("https://64517f5ba322196911649cd9.mockapi.io/foods")
+    .then(resp => {
+      setFoods(resp.data);
+    })
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+    <Header/>
+
+    <Switch>
+      <Route exact path="/"><Home foods={foods}/></Route>
+      <Route path="/urun/:urunId"><Product/></Route>
+      <Route path="/iletisim"><Contact/></Route>
+      <Route path="/sepet"><Cart/></Route>
+    </Switch>
+
+    <Footer/>
+    </>
+  )
 }
 
-export default App;
+export default App
