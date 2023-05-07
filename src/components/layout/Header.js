@@ -8,7 +8,7 @@ import {
 } from 'reactstrap';
 import { NavLink, Link } from 'react-router-dom';
 
-const Header = () => {
+const Header = ({cartCount}) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const checkActive = (value) => {
@@ -30,7 +30,7 @@ const Header = () => {
             <NavLink className={isActive => checkActive(isActive)} to="/iletisim" >İletişim</NavLink>
             </NavItem>
             <NavItem>
-            <NavLink className={isActive => checkActive(isActive)}  to="/sepet" >Sepet - 0</NavLink>
+            <NavLink className={isActive => checkActive(isActive)}  to="/sepet" >Sepet - {cartCount}</NavLink>
             </NavItem>
           </Nav>
         </Collapse>

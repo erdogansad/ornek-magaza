@@ -1,16 +1,21 @@
 import React from 'react'
+import { Link } from "react-router-dom";
 import {Card, CardBody, CardTitle, CardSubtitle, CardText, Button} from "reactstrap"
 
-const CardSingle = ({food}) => {
+const CardSingle = ({food, addToCart}) => {
+    const foodLink = food.name.toLowerCase().split(" ").join("-");
+    const foodCategory = food.category.toLowerCase().split(" ").join("-");
+    
+
   return (
     <Card className='text-center h-100'>
-        <img alt="Sample" src={food.img}/>
-        <CardBody>
+        <Link to={`${foodCategory}/${foodLink}`}><img alt="Sample" src={food.img+food.id}/></Link>
+        <CardBody className='h-100'>
             <CardTitle tag="h5">
-                {food.name}
+                <Link to={`${foodCategory}/${foodLink}`}>{food.name}</Link>
             </CardTitle>
             <CardSubtitle className="mb-2 text-muted" tag="h6">
-                {food.category}
+                <Link to={`${foodCategory}`}>{food.category}</Link>
             </CardSubtitle>
             <CardText className='fw-semibold'>
                 {food.price}
@@ -18,10 +23,10 @@ const CardSingle = ({food}) => {
             <CardText>
                 {food.description}
             </CardText>
-            <Button className='mt-auto' disabled={food.stock == 0 && true}>
-                Sepete Ekle
-            </Button>
         </CardBody>
+        <Button color="success" className='mx-5 mb-2' disabled={food.stock === 0 && true} onClick={() => addToCart(food)}>
+            Sepete Ekle
+        </Button>
     </Card>
   )
 }
